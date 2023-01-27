@@ -11,6 +11,7 @@
   "dependencies": {
     "@next-auth/prisma-adapter": "^1.0.5",
     "@next/font": "13.1.5",
+    "aws-sdk": "^2.1303.0",
     "eslint": "8.32.0",
     "eslint-config-next": "13.1.5",
     "next": "13.1.5",
