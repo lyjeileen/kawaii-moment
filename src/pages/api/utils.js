@@ -25,8 +25,6 @@ export default async function handler(req, res) {
 
     const videoURL =
       'https://lyjeileen.s3.ca-central-1.amazonaws.com/big_buck_bunny_720p_2mb.mp4';
-    const thumbnailURL =
-      'https://lyjeileen.s3.ca-central-1.amazonaws.com/5366563581_3663091e9f_c+(1).jpg';
 
     const users = await prisma.user.findMany();
     const getRandomUser = () => {
@@ -39,7 +37,7 @@ export default async function handler(req, res) {
       await prisma.video.create({
         data: {
           title: faker.lorem.words(),
-          thumbnail: thumbnailURL,
+          thumbnail: faker.image.abstract(800, 450, true),
           url: videoURL,
           length: faker.datatype.number(1000),
           visibility: 'public',
