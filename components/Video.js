@@ -1,8 +1,12 @@
 import Image from 'next/image';
-import Avatar from '/components/Avatar';
+import Avatar from 'components/Avatar';
+import timeago from 'lib/timeago';
+
 export default function Video({ video }) {
+  const postTime = timeago.format(new Date(video.createdAt));
+
   return (
-    <div className="aspect-sqaure border md:m-4">
+    <div className="aspect-sqaure md:m-4">
       <div className="relative aspect-video">
         <Image
           alt={video.title}
@@ -20,7 +24,7 @@ export default function Video({ video }) {
           <p className="font-semibold">{video.title}</p>
           <p>{video.author.name}</p>
           <span>{video.views} views - </span>
-          <span>{video.createdAt}</span>
+          <span>{postTime}</span>
         </div>
       </div>
     </div>
