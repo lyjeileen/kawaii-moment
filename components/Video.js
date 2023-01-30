@@ -22,9 +22,11 @@ export default function Video({ video }) {
         <Avatar image={video.author.image} />
         <div className="ml-2">
           <p className="font-semibold">{video.title}</p>
-          <p>{video.author.name}</p>
-          <span>{video.views} views - </span>
-          <span>{postTime}</span>
+          <div className="text-xs text-gray-700">
+            <p>{video.author.name}</p>
+            <span>{video.views} views - </span>
+            <span>{postTime}</span>
+          </div>
         </div>
       </div>
     </div>
