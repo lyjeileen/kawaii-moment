@@ -3,13 +3,15 @@ import Image from 'next/image';
 export default function Avatar({ image }) {
   if (image) {
     return (
-      <Image
-        className="rounded-full"
-        src={image}
-        alt="Author name"
-        width={40}
-        height={40}
-      />
+      <div>
+        <Image
+          className="rounded-full"
+          src={image}
+          alt="Author name"
+          width={40}
+          height={40}
+        />
+      </div>
     );
   }
   return (
