@@ -6,7 +6,7 @@ export default function Video({ video }) {
   const postTime = timeago.format(new Date(video.createdAt));
 
   return (
-    <div className="aspect-sqaure md:m-4">
+    <div className="aspect-sqaure m-4">
       <div className="relative aspect-video">
         <Image
           alt={video.title}
