@@ -37,7 +37,7 @@ export default async function handler(req, res) {
       await prisma.video.create({
         data: {
           title: faker.lorem.words(),
-          thumbnail: faker.image.abstract(800, 450, true),
+          thumbnail: faker.image.animals(800, 450, true),
           url: videoURL,
           length: faker.datatype.number(1000),
           visibility: 'public',
