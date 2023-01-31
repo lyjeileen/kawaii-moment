@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import Avatar from 'components/Avatar';
 import timeago from 'lib/timeago';
 
@@ -28,32 +29,42 @@ const calculateTime = (length) => {
   });
   return result.join(':');
 };
+
 export default function Video({ video }) {
   const postTime = timeago.format(new Date(video.createdAt));
 
   return (
     <div className="aspect-sqaure md:m-4">
       <div className="relative aspect-video">
-        <Image
-          alt={video.title}
-          src={video.thumbnail}
-          fill
-          sizes="(max-width: 640px) 100vw,
+        <Link href={`video/${video.id}`}>
+          <Image
+            alt={video.title}
+            src={video.thumbnail}
+            fill
+            sizes="(max-width: 640px) 100vw,
               (max-width: 768px) 50vw,
               33vw"
-          className="border rounded-lg"
-        />
+            className="border rounded-lg"
+          />
+        </Link>
         <p className="absolute bottom-2 right-2 text-white text-xs font-semibold bg-black opacity-80 border border-black rounded-md">
           {/* {new Date(video.length * 1000).toISOString().substring(11, 16)} */}
           {calculateTime(video.length)}
         </p>
       </div>
+
       <div className="flex m-2">
-        <Avatar image={video.author.image} />
+        <Link href={`/channel/${video.author.name}`}>
+          <Avatar image={video.author.image} />
+        </Link>
         <div className="ml-2">
-          <p className="font-semibold">{video.title}</p>
+          <Link href={`video/${video.id}`}>
+            <p className="font-semibold">{video.title}</p>
+          </Link>
           <div className="text-xs text-gray-700">
-            <p>{video.author.name}</p>
+            <Link href={`/channel/${video.author.name}`}>
+              <p>{video.author.name}</p>
+            </Link>
             <span>
               {video.views} views · {postTime}
             </span>
