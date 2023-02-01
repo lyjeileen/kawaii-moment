@@ -1,7 +1,6 @@
 import Head from 'next/head';
 import prisma from 'lib/prisma';
 import { getVideos } from 'lib/data';
-import Navbar from '/components/Navbar';
 import Videos from '/components/Videos';
 
 export default function Home({ videos }) {
@@ -12,9 +11,7 @@ export default function Home({ videos }) {
         <meata name="description" content="A great YouTube Clone" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <header>
-        <Navbar />
-      </header>
+
       {videos.length === 0 && <h1>No videos found</h1>}
       <Videos videos={videos} />
     </>
