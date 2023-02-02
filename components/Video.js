@@ -34,7 +34,7 @@ export default function Video({ video }) {
   const postTime = timeago.format(new Date(video.createdAt));
 
   return (
-    <div className="aspect-sqaure m-4">
+    <div className="aspect-sqaure mx-4 mb-2">
       <div className="relative aspect-video">
         <Link href={`video/${video.id}`}>
           <Image
@@ -47,7 +47,7 @@ export default function Video({ video }) {
             className="border rounded-lg"
           />
         </Link>
-        <p className="absolute bottom-2 right-2 text-white text-xs font-semibold bg-black opacity-80 border border-black rounded-md">
+        <p className="absolute bottom-2 right-2 px-1 text-white text-xs font-semibold bg-black opacity-80 border border-black rounded-sm">
           {/* {new Date(video.length * 1000).toISOString().substring(11, 16)} */}
           {calculateTime(video.length)}
         </p>
