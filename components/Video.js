@@ -35,8 +35,8 @@ export default function Video({ video }) {
 
   return (
     <div className="aspect-sqaure mx-4 mb-2">
-      <div className="relative aspect-video">
-        <Link href={`video/${video.id}`}>
+      <Link href={`video/${video.id}`}>
+        <div className="relative aspect-video">
           <Image
             alt={video.title}
             src={video.thumbnail}
@@ -46,13 +46,13 @@ export default function Video({ video }) {
               33vw"
             className="border rounded-lg"
           />
-        </Link>
-        <p className="absolute bottom-2 right-2 px-1 text-white text-xs font-semibold bg-black opacity-80 border border-black rounded-sm">
-          {/* {new Date(video.length * 1000).toISOString().substring(11, 16)} */}
-          {calculateTime(video.length)}
-        </p>
-      </div>
 
+          <p className="absolute bottom-2 right-2 px-1 text-white text-xs font-semibold bg-black opacity-80 border border-black rounded-sm">
+            {/* {new Date(video.length * 1000).toISOString().substring(11, 16)} */}
+            {calculateTime(video.length)}
+          </p>
+        </div>
+      </Link>
       <div className="flex m-2">
         <Link href={`/channel/${video.author.name}`}>
           <Avatar image={video.author.image} />
