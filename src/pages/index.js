@@ -3,13 +3,14 @@ import Head from 'next/head';
 
 import prisma from 'lib/prisma';
 import { getVideos } from 'lib/data';
+import { amount } from 'lib/config';
 
 import Videos from '/components/Videos';
 import LoadMore from '/components/LoadMore';
 
 export default function Home({ initialVideos }) {
   const [videos, setVideos] = useState(initialVideos);
-  const [end, setEnd] = useState(false);
+  const [end, setEnd] = useState(initialVideos.length < amount);
 
   return (
     <>
@@ -20,8 +21,9 @@ export default function Home({ initialVideos }) {
       </Head>
       {videos.length === 0 && <h1>No videos found</h1>}
       <Videos videos={videos} />
-      (!end &&
-      <LoadMore videos={videos} setVideos={setVideos} setEnd={setEnd} />)
+      {!end && (
+        <LoadMore videos={videos} setVideos={setVideos} setEnd={setEnd} />
+      )}
     </>
   );
 }

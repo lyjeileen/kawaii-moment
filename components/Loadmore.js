@@ -1,6 +1,6 @@
 import { amount } from 'lib/config';
 
-export default function Loadmore({ videos, setVideos }) {
+export default function Loadmore({ videos, setVideos, setEnd }) {
   return (
     <div className="flex justify-center">
       <button
@@ -10,6 +10,11 @@ export default function Loadmore({ videos, setVideos }) {
           const res = await fetch(`/api/videos?skip=${videos.length}`);
           //save res in data
           const data = await res.json();
+
+          //not show load more button if not enough videos are left
+          if (data.length < amount) {
+            setEnd(true);
+          }
           //combine previous videos and new videos
           setVideos([...videos, ...data]);
         }}
