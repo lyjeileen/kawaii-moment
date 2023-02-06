@@ -1,7 +1,24 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { useSession } from 'next-auth/react';
 
 export default function Navbar() {
+  const { data: session, status } = useSession();
+
+  if (status === 'loading') {
+    return (
+      <nav className="bg-amber-50 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-900">
+        <div className="flex flex-wrap items-center justify-between ">
+          <Link href="/" className="flex items-center">
+            <Image src="/favicon.ico" alt="Logo" width={40} height={40} />
+            <span className="self-center m-2 text-xl text-amber-800 font-bold whitespace-nowrap dark:text-white">
+              YouTube
+            </span>
+          </Link>
+        </div>
+      </nav>
+    );
+  }
   return (
     <nav className="bg-amber-50 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-900">
       <div className="flex flex-wrap items-center justify-between ">
@@ -70,10 +87,10 @@ export default function Navbar() {
             </li>
             <li>
               <a
-                href="#"
+                href={session ? '/api/auth/signout' : '/api/auth/signout'}
                 className="block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
               >
-                Contact
+                {session ? 'Logout' : 'Login'}
               </a>
             </li>
           </ul>
