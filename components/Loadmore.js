@@ -1,13 +1,19 @@
 import { amount } from 'lib/config';
 
-export default function Loadmore({ videos, setVideos, setEnd }) {
+export default function LoadMore({ videos, setVideos, setEnd, author }) {
   return (
     <div className="flex justify-center">
       <button
         className="px-8 py-2 m-8 text-amber-800 border border-amber-800 rounded-full"
         onClick={async () => {
+          let url = `/api/videos?skip=${videos.length}`;
+
+          if (author) {
+            url += `&author=${author.id}`;
+          }
+
           //use api query string to add skip
-          const res = await fetch(`/api/videos?skip=${videos.length}`);
+          const res = await fetch(url);
           //save res in data
           const data = await res.json();
 
