@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
+import { useSession } from 'next-auth/react';
 
 import prisma from 'lib/prisma';
 import { getVideos } from 'lib/data';
@@ -11,6 +13,18 @@ import LoadMore from '/components/LoadMore';
 export default function Home({ initialVideos }) {
   const [videos, setVideos] = useState(initialVideos);
   const [end, setEnd] = useState(initialVideos.length < amount);
+  const { data: session, status } = useSession();
+  const router = useRouter();
+
+  const loading = status === 'loading';
+
+  if (loading) {
+    return null;
+  }
+
+  if (session && !session.user.name) {
+    router.push('/setup');
+  }
 
   return (
     <>
