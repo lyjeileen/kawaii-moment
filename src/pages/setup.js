@@ -22,7 +22,7 @@ export default function Setup() {
       </h1>
 
       <form
-        className="p-10 pb-4 border border-amber-800 rounded-md"
+        className="p-10 pb-4 border-2 border-amber-800 rounded-md"
         onSubmit={async (e) => {
           e.preventDefault();
 
