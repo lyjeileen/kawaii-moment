@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
-
+import Link from 'next/link';
 import Button from 'components/Button';
 
 export default function Setup() {
@@ -12,7 +12,23 @@ export default function Setup() {
   const [imageURL, setImageURL] = useState(null);
   const [image, setImage] = useState(null);
 
-  if (!session || !session.user || loading) return null;
+  if (loading) return null;
+  if (!session || !session.user)
+    return (
+      <div
+        class="bg-orange-100 border-l-4 border-orange-500 text-orange-700 p-4 m-4"
+        role="alert"
+      >
+        <p class="font-bold">Error</p>
+        <p>
+          You need to{' '}
+          <Link href="/api/auth/signin" className="underline">
+            log in
+          </Link>{' '}
+          to set up your profile.
+        </p>
+      </div>
+    );
 
   return (
     <div className="m-auto flex flex-col w-fit text-amber-800">
