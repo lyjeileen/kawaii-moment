@@ -2,7 +2,7 @@
 
 ## Project Description
 
-A youtube-clone with the functions of uploading videos/avatars to AWS S3, playing videos, subscription. Still work in progress
+A youtube-clone with the functions of uploading videos/avatars to AWS S3, playing videos, subscription. Work in progress
 
 <hr>
 
