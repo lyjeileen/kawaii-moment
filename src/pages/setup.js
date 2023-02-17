@@ -1,8 +1,7 @@
 import { useState } from 'react';
-import Image from 'next/image';
 import { useSession } from 'next-auth/react';
+import Image from 'next/image';
 
-import Avatar from 'components/Avatar';
 import Button from 'components/Button';
 
 export default function Setup() {
