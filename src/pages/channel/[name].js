@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { getUser, getVideos } from 'lib/data';
+import { getSubscribersCount, getUser, getVideos } from 'lib/data';
 import prisma from 'lib/prisma';
 import { amount } from 'lib/config';
 
@@ -8,7 +8,7 @@ import Avatar from 'components/Avatar';
 import Videos from 'components/Videos';
 import LoadMore from 'components/LoadMore';
 
-export default function Channel({ user, initialVideos }) {
+export default function Channel({ user, initialVideos, subscribers }) {
   const [videos, setVideos] = useState(initialVideos);
   const [end, setEnd] = useState(initialVideos.length < amount);
 
@@ -20,9 +20,12 @@ export default function Channel({ user, initialVideos }) {
     <>
       <div className="flex p-3 m-4 border-b-2 border-double border-slate-400">
         <Avatar image={user.image} />
-        <p className="text-xl text-semibold ml-4">
-          {user.name.toUpperCase()}&apos;s Channel
-        </p>
+        <div className="ml-4">
+          <p className="text-xl text-semibold ">
+            {user.name.toUpperCase()}&apos;s Channel
+          </p>
+          <p>{subscribers} subscribers</p>
+        </div>
       </div>
       <Videos videos={videos} />
       {!end && (
@@ -42,8 +45,9 @@ export const getServerSideProps = async (context) => {
   user = JSON.parse(JSON.stringify(user));
   let videos = await getVideos({ author: user.id }, prisma);
   videos = JSON.parse(JSON.stringify(videos));
+  const subscribers = await getSubscribersCount(context.params.name, prisma);
 
   return {
-    props: { user, initialVideos: videos },
+    props: { user, subscribers, initialVideos: videos },
   };
 };
