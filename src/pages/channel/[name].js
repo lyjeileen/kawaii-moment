@@ -24,7 +24,9 @@ export default function Channel({ user, initialVideos, subscribers }) {
           <p className="text-xl text-semibold ">
             {user.name.toUpperCase()}&apos;s Channel
           </p>
-          <p>{subscribers} subscribers</p>
+          <p>
+            {subscribers} {subscribers > 1 ? 'subscribers' : 'subscriber'}
+          </p>
         </div>
       </div>
       <Videos videos={videos} />
