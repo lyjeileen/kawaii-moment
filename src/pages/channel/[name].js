@@ -39,8 +39,9 @@ export default function Channel({ user, initialVideos, subscribers }) {
             </p>
           </div>
         </div>
-        {/* only show subscribe button when logged in */}
-        {session && (
+
+        {/* only show subscribe button when logged in and not the owner of this channel */}
+        {session && user.id !== session.user.id && (
           <Button
             text="Subscribe"
             onClick={async () => {
