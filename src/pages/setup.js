@@ -41,6 +41,7 @@ export default function Setup() {
           <p class="font-bold">You have saved your profile successfully!</p>
         </div>
       )}
+
       <div className="m-auto flex flex-col w-fit text-amber-800">
         <h1 className="font-bold text-xl my-10 text-center">
           Set up your profile
