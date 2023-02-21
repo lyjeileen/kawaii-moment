@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
-import Link from 'next/link';
+
 import Button from 'components/Button';
+import LoginMessage from 'components/LoginMessage';
 
 export default function Setup() {
   const { data: session, status } = useSession();
@@ -14,22 +15,7 @@ export default function Setup() {
   const [isSaved, setIsSaved] = useState(false);
 
   if (loading) return null;
-  if (!session || !session.user)
-    return (
-      <div
-        class="bg-orange-100 border-l-4 border-orange-500 text-orange-700 p-4 m-4"
-        role="alert"
-      >
-        <p class="font-bold">Error</p>
-        <p>
-          You need to{' '}
-          <Link href="/api/auth/signin" className="underline">
-            log in
-          </Link>{' '}
-          to set up your profile.
-        </p>
-      </div>
-    );
+  if (!session || !session.user) return <LoginMessage />;
 
   return (
     <>
@@ -38,7 +24,7 @@ export default function Setup() {
           className="bg-orange-100 border-l-4 border-orange-500 text-orange-700 p-4 m-auto w-fit"
           role="alert"
         >
-          <p class="font-bold">You have saved your profile successfully!</p>
+          <p className="font-bold">You have saved your profile successfully!</p>
         </div>
       )}
 
