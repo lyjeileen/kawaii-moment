@@ -1,7 +1,14 @@
 import { useState } from 'react';
 import { useSession } from 'next-auth/react';
-
-import { getSubscribersCount, getUser, getVideos } from 'lib/data';
+import { useRouter } from 'next/router';
+import { getServerSession } from 'next-auth/next';
+import { authOptions } from 'src/pages/api/auth/[...nextauth]';
+import {
+  getSubscribersCount,
+  getUser,
+  getVideos,
+  isSubscribed,
+} from 'lib/data';
 import prisma from 'lib/prisma';
 import { amount } from 'lib/config';
 
@@ -10,10 +17,19 @@ import Videos from 'components/Videos';
 import LoadMore from 'components/LoadMore';
 import Button from 'components/Button';
 
-export default function Channel({ user, initialVideos, subscribers }) {
+export default function Channel({
+  user,
+  initialVideos,
+  subscribers,
+  subscribed,
+}) {
   const [videos, setVideos] = useState(initialVideos);
   const [end, setEnd] = useState(initialVideos.length < amount);
+  const [isSubscribe, setIsSubscribe] = useState(subscribed);
+  const [subscriberCount, setSubscriberCount] = useState(subscribers);
+
   const { data: session, status } = useSession();
+  const router = useRouter();
 
   const loading = status === 'loading';
 
@@ -35,7 +51,8 @@ export default function Channel({ user, initialVideos, subscribers }) {
               {user.name.toUpperCase()}&apos;s Channel
             </p>
             <p className="text-sm text-gray-700">
-              {subscribers} {subscribers > 1 ? 'subscribers' : 'subscriber'}
+              {subscriberCount}
+              {subscriberCount > 1 ? ' subscribers' : ' subscriber'}
             </p>
           </div>
         </div>
@@ -43,13 +60,20 @@ export default function Channel({ user, initialVideos, subscribers }) {
         {/* only show subscribe button when logged in and not the owner of this channel */}
         {session && user.id !== session.user.id && (
           <Button
-            text="Subscribe"
+            text={isSubscribe ? 'Subscribed' : 'Subscribe'}
             onClick={async () => {
-              await fetch('/api/subscribe', {
+              await fetch(`/api/${isSubscribe ? 'unsubscribe' : 'subscribe'}`, {
                 body: JSON.stringify({ subscribeTo: user.id }),
                 headers: { 'Content-Type': 'application/json' },
                 method: 'POST',
               });
+
+              //change subscribercount and subscribe button
+              isSubscribe
+                ? setSubscriberCount(subscriberCount - 1)
+                : setSubscriberCount(subscriberCount + 1);
+
+              setIsSubscribe(!isSubscribe);
             }}
           />
         )}
@@ -70,11 +94,20 @@ export default function Channel({ user, initialVideos, subscribers }) {
 export const getServerSideProps = async (context) => {
   let user = await getUser(context.params.name, prisma);
   user = JSON.parse(JSON.stringify(user));
+
   let videos = await getVideos({ author: user.id }, prisma);
   videos = JSON.parse(JSON.stringify(videos));
+
   const subscribers = await getSubscribersCount(context.params.name, prisma);
 
+  const session = await getServerSession(context.req, context.res, authOptions);
+  console.log('session', session);
+  let subscribed = false;
+  if (session) {
+    subscribed = await isSubscribed(session.user.id, user.id, prisma);
+  }
+
   return {
-    props: { user, subscribers, initialVideos: videos },
+    props: { user, subscribers, subscribed, initialVideos: videos },
   };
 };

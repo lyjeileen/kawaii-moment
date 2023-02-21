@@ -1,9 +1,10 @@
 import NextAuth from 'next-auth';
+
 import EmailProvider from 'next-auth/providers/email';
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import prisma from 'lib/prisma';
 
-export default NextAuth({
+export const authOptions = {
   providers: [
     EmailProvider({
       server: process.env.EMAIL_SERVER,
@@ -31,4 +32,6 @@ export default NextAuth({
       return Promise.resolve(session);
     },
   },
-});
+};
+
+export default NextAuth(authOptions);
