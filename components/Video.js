@@ -35,7 +35,7 @@ export default function Video({ video }) {
 
   return (
     <div className="aspect-sqaure mx-4 mb-2">
-      <Link href={`video/${video.id}`}>
+      <Link href={`/video/${video.id}`}>
         <div className="relative aspect-video">
           <Image
             alt={video.title}
@@ -58,7 +58,7 @@ export default function Video({ video }) {
           <Avatar image={video.author.image} />
         </Link>
         <div className="ml-2">
-          <Link href={`video/${video.id}`}>
+          <Link href={`/video/${video.id}`}>
             <p className="font-semibold">{video.title}</p>
           </Link>
           <div className="text-xs text-gray-700">
