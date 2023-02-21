@@ -29,7 +29,6 @@ export default function Channel({
   const [subscriberCount, setSubscriberCount] = useState(subscribers);
 
   const { data: session, status } = useSession();
-  const router = useRouter();
 
   const loading = status === 'loading';
 
@@ -101,7 +100,6 @@ export const getServerSideProps = async (context) => {
   const subscribers = await getSubscribersCount(context.params.name, prisma);
 
   const session = await getServerSession(context.req, context.res, authOptions);
-  console.log('session', session);
   let subscribed = false;
   if (session) {
     subscribed = await isSubscribed(session.user.id, user.id, prisma);
