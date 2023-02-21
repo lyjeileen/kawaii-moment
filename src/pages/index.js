@@ -1,7 +1,4 @@
 import { useState } from 'react';
-import Head from 'next/head';
-import { useRouter } from 'next/router';
-import { useSession } from 'next-auth/react';
 
 import prisma from 'lib/prisma';
 import { getVideos } from 'lib/data';
@@ -16,11 +13,6 @@ export default function Home({ initialVideos }) {
 
   return (
     <>
-      <Head>
-        <title>Youtube</title>
-        <meta name="description" content="A great YouTube Clone" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
       {videos.length === 0 && <h1>No videos found</h1>}
       <Videos videos={videos} />
       {!end && (
