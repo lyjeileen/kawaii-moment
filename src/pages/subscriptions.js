@@ -45,7 +45,6 @@ export default function Subscriptions({ initialVideos }) {
 }
 
 export const getServerSideProps = async (context) => {
-  console.log('subcriptions');
   const session = await getServerSession(context.req, context.res, authOptions);
 
   let videos = await getVideos({ subscriptions: session.user.id }, prisma);
