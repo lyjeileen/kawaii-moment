@@ -1,14 +1,34 @@
+import { useEffect } from 'react';
+
 import prisma from 'lib/prisma';
 import { getVideo, getVideos } from 'lib/data';
+import timeago from 'lib/timeago';
+
 import Avatar from 'components/Avatar';
 import Video from 'components/Video';
-import timeago from 'lib/timeago';
+
 //lazy load the player for url, reduce main bundle size
 import dynamic from 'next/dynamic';
 const ReactPlayer = dynamic(() => import('react-player/lazy'), { ssr: false });
 
 export default function SingleVideo({ video, videos }) {
-  if (!video) return <p>Video not found</p>;
+  useEffect(() => {
+    if (video) {
+      const incrementViews = async () => {
+        await fetch('/api/view', {
+          body: JSON.stringify({
+            video: video.id,
+          }),
+          headers: { 'Content-Type': 'application/json' },
+          method: 'POST',
+        });
+      };
+      incrementViews();
+    }
+  }, []);
+
+  if (!video) return <p className="p-4">Video not found</p>;
+
   const postTime = timeago.format(new Date(video.createdAt));
   const videoList = videos.map((video) => (
     <Video key={video.id} video={video} />
@@ -28,7 +48,7 @@ export default function SingleVideo({ video, videos }) {
         </div>
         <p className="font-bold text-xl mt-2">{video.title}</p>
         <p className="text-xs text-gray-700">
-          {video.views} views · {postTime}
+          {video.views + 1} views · {postTime}
         </p>
         <div className="flex mt-2">
           <Avatar image={video.author.image} />
