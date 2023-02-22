@@ -1,6 +1,12 @@
 import { amount } from 'lib/config';
 
-export default function LoadMore({ videos, setVideos, setEnd, author }) {
+export default function LoadMore({
+  videos,
+  setVideos,
+  setEnd,
+  author,
+  subscriptions,
+}) {
   return (
     <div className="flex justify-center">
       <button
@@ -10,6 +16,10 @@ export default function LoadMore({ videos, setVideos, setEnd, author }) {
 
           if (author) {
             url += `&author=${author.id}`;
+          }
+
+          if (subscriptions) {
+            url += `&subscriptions=${subscriptions}`;
           }
 
           //use api query string to add skip
