@@ -13,7 +13,7 @@ export default function Home({ initialVideos }) {
 
   return (
     <>
-      {videos.length === 0 && <h1>No videos found</h1>}
+      {videos.length === 0 && <h1 className="m-4">No videos found</h1>}
       <Videos videos={videos} />
       {!end && (
         <LoadMore videos={videos} setVideos={setVideos} setEnd={setEnd} />
