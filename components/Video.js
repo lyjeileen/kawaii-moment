@@ -66,7 +66,7 @@ export default function Video({ video }) {
               <p>{video.author.name}</p>
             </Link>
             <span>
-              {video.views} views · {postTime}
+              {video.views} {video.views > 1 ? 'views' : 'view'} · {postTime}
             </span>
           </div>
         </div>
