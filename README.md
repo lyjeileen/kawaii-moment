@@ -16,5 +16,6 @@ A youtube-clone with the functions of uploading videos/avatars to AWS S3, playin
 - next-auth
 - react-player
 - aws-sdk
+- headless UI
 
 <hr>
