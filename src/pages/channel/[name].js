@@ -92,7 +92,7 @@ export default function Channel({
 export const getServerSideProps = async (context) => {
   let user = await getUser(context.params.name, prisma);
   user = JSON.parse(JSON.stringify(user));
-
+  console.log(user);
   let videos = await getVideos({ author: user.id }, prisma);
   videos = JSON.parse(JSON.stringify(videos));
 
