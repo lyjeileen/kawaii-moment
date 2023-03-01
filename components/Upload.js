@@ -19,7 +19,7 @@ const getVideoDuration = (file) => {
 
 export default function Upload() {
   const { data: session, status } = useSession();
-  let [isOpen, setIsOpen] = useState(true);
+  let [isOpen, setIsOpen] = useState(false);
   const [title, setTitle] = useState('');
   const [image, setImage] = useState(null);
   const [video, setVideo] = useState(null);
