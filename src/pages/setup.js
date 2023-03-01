@@ -34,7 +34,7 @@ export default function Setup() {
         </h1>
 
         <form
-          className="p-10 pb-4 border-2 border-amber-800 rounded-md"
+          className="m-4 p-10 pb-4 border-2 border-amber-800 rounded-md"
           onSubmit={async (e) => {
             e.preventDefault();
 
@@ -61,30 +61,27 @@ export default function Setup() {
             type="text"
             name="name"
             required
-            value={name}
-            className="border p-1 border-amber-800 rounded-md"
+            // show original name if have one
+            value={name || session.user.name}
+            className="border p-1 w-full border-amber-800 rounded-md"
             onChange={(e) => setName(e.target.value)}
           />
           <label className="cursor-pointer">
             <div className="my-2">Avatar</div>
-            <div className="border p-1 border-amber-800 rounded-md bg-white">
-              {!imageURL ? (
-                <p>Upload image</p>
-              ) : (
-                <Image
-                  className="rounded-full h-8"
-                  src={imageURL}
-                  alt="Image"
-                  width={32}
-                  height={32}
-                />
-              )}
-
+            {session.user.image && (
+              <Image
+                className="rounded-full h-8"
+                src={imageURL || session.user.image}
+                alt="Image"
+                width={32}
+                height={32}
+              />
+            )}
+            <div className="border p-1 mt-4 border-amber-800 rounded-md bg-white">
               <input
                 name="image"
                 type="file"
                 accept="image/*"
-                className="hidden"
                 required
                 onChange={(event) => {
                   if (event.target.files && event.target.files[0]) {
