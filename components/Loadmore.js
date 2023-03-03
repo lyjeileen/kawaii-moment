@@ -31,6 +31,7 @@ export default function LoadMore({
           if (data.length < amount) {
             setEnd(true);
           }
+
           //combine previous videos and new videos
           setVideos([...videos, ...data]);
         }}

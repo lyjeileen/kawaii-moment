@@ -8,6 +8,7 @@ const nextConfig = {
       'lyjeileen.s3.amazonaws.com',
       'loremflickr.com',
       'cloudflare-ipfs.com',
+      'images.pexels.com',
     ],
   },
 };
