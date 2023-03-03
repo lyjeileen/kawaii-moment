@@ -2,6 +2,8 @@ import AWS from 'aws-sdk';
 import prisma from 'lib/prisma';
 import { faker } from '@faker-js/faker';
 
+const API_KEY = process.env.NEXT_PUBLIC_PEXELS_API_KEY;
+
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.end();
 
@@ -18,28 +20,31 @@ export default async function handler(req, res) {
       usersCount++;
     }
 
-    const s3 = new AWS.S3({
-      acessKeyId: process.env.AWS_S3_ACCESS_KEY_ID,
-      secretAccessKey: process.env.AWS_S3_SECRET_ACESS_KEY,
-    });
-
-    const videoURL =
-      'https://lyjeileen.s3.ca-central-1.amazonaws.com/big_buck_bunny_720p_2mb.mp4';
+    //get videos from pexels
+    const res = await fetch(
+      `https://api.pexels.com/videos/search?query=cute&per_page=40`,
+      {
+        headers: {
+          Authorization: API_KEY,
+        },
+      }
+    );
+    const responseJson = await res.json();
 
     const users = await prisma.user.findMany();
     const getRandomUser = () => {
       const randomIndex = Math.floor(Math.random() * users.length);
       return users[randomIndex];
     };
-    let videosCount = 0;
 
-    while (videosCount < 20) {
+    const videos = responseJson.videos;
+    videos.forEach(async (video) => {
       await prisma.video.create({
         data: {
           title: faker.lorem.words(),
-          thumbnail: faker.image.food(800, 450, true),
-          url: videoURL,
-          length: faker.datatype.number(10000),
+          thumbnail: video.video_pictures[0].picture,
+          url: video.video_files[0].link,
+          length: video.duration,
           visibility: 'public',
           views: faker.datatype.number(1000),
           author: {
@@ -47,8 +52,7 @@ export default async function handler(req, res) {
           },
         },
       });
-      videosCount++;
-    }
+    });
   }
 
   if (req.body.task === 'clear_database') {
