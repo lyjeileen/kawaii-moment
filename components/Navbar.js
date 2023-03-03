@@ -2,6 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 import Upload from 'components/Upload';
+import Avatar from 'components/Avatar';
 
 export default function Navbar() {
   const { data: session, status } = useSession();
@@ -13,7 +14,7 @@ export default function Navbar() {
           <Link href="/" className="flex items-center">
             <Image src="/favicon.ico" alt="Logo" width={40} height={40} />
             <span className="self-center m-2 text-xl text-amber-800 font-bold whitespace-nowrap dark:text-white">
-              YouTube
+              Kawaii Moment
             </span>
           </Link>
         </div>
@@ -27,7 +28,7 @@ export default function Navbar() {
         <Link href="/" className="flex items-center">
           <Image src="/favicon.ico" alt="Logo" width={40} height={40} />
           <span className="self-center m-2 text-xl text-amber-800 font-bold whitespace-nowrap dark:text-white">
-            YouTube
+            Kawaii Moment
           </span>
         </Link>
         <button
@@ -55,21 +56,12 @@ export default function Navbar() {
         <div className="hidden w-full md:block md:w-auto" id="navbar-default">
           <ul className="flex flex-col p-4 mt-4 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-amber-50 dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
             <li>
-              <a
-                href="#"
-                className="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-amber-800 md:p-0 dark:text-white"
-                aria-current="page"
-              >
-                Home
-              </a>
-            </li>
-            <li>
               <Upload />
             </li>
             <li>
               <Link
                 href="/subscriptions"
-                className="block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                className="block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-amber-800 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
               >
                 Subscriptions
               </Link>
@@ -77,7 +69,7 @@ export default function Navbar() {
             <li>
               <Link
                 href="/setup"
-                className="block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                className="block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-amber-800 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
               >
                 Setup
               </Link>
@@ -85,11 +77,21 @@ export default function Navbar() {
             <li>
               <Link
                 href={session ? '/api/auth/signout' : '/api/auth/signin'}
-                className="block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                className="block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-amber-800 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
               >
                 {session ? 'Logout' : 'Login'}
               </Link>
             </li>
+            {session && (
+              <li>
+                <Link
+                  href={`/channel/${session.user.name}`}
+                  className="block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                >
+                  <Avatar image={session.user.image} />
+                </Link>
+              </li>
+            )}
           </ul>
         </div>
       </div>

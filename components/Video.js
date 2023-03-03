@@ -44,7 +44,7 @@ export default function Video({ video }) {
             sizes="(max-width: 640px) 100vw,
               (max-width: 768px) 50vw,
               33vw"
-            className="border rounded-lg"
+            className="border rounded-lg object-cover"
           />
 
           <p className="absolute bottom-2 right-2 px-1 text-white text-xs font-semibold bg-black opacity-80 border border-black rounded-sm">
