@@ -7,8 +7,8 @@ export default function App({ Component, pageProps }) {
   return (
     <SessionProvider session={pageProps.session}>
       <Head>
-        <title>Youtube</title>
-        <meta name="description" content="A great YouTube Clone" />
+        <title>Kawaii Moment</title>
+        <meta name="description" content="Kawaii Moment" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Navbar />
