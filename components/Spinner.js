@@ -3,7 +3,7 @@ export default function Spinner() {
     <svg
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
-      className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+      className="animate-spin -ml-1 mr-3 h-16 w-16 text-amber-800"
       viewBox="0 0 24 24"
     >
       <circle

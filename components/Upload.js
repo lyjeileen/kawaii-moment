@@ -1,6 +1,7 @@
 import { Dialog, Transition } from '@headlessui/react';
 import { Fragment, useState } from 'react';
 import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/router';
 
 import Spinner from 'components/Spinner';
 
@@ -20,13 +21,14 @@ const getVideoDuration = (file) => {
 };
 
 export default function Upload() {
+  const router = useRouter();
   const { data: session, status } = useSession();
   let [isOpen, setIsOpen] = useState(false);
   const [title, setTitle] = useState('');
   const [image, setImage] = useState(null);
   const [video, setVideo] = useState(null);
   const [duration, setDuration] = useState(null);
-  const [uploading, setUploading] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
 
   if (status === 'loading') {
     return null;
@@ -83,6 +85,7 @@ export default function Upload() {
                     >
                       Upload New Video
                     </Dialog.Title>
+
                     {/* close button */}
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -100,11 +103,14 @@ export default function Upload() {
                       />
                     </svg>
                   </div>
-                  {session && session.user && (
+
+                  {session && session.user && !isUploading && (
                     <form
                       className="mt-8"
                       onSubmit={async (e) => {
                         e.preventDefault();
+
+                        setIsUploading(true);
 
                         const body = new FormData();
                         body.append('image', image);
@@ -119,6 +125,9 @@ export default function Upload() {
                         setVideo(null);
                         setDuration(null);
                         setIsOpen(false);
+                        setIsUploading(false);
+
+                        router.push(`/channel/${session.user.name}`);
                       }}
                     >
                       <div>Title</div>
@@ -182,6 +191,12 @@ export default function Upload() {
                         </button>
                       </div>
                     </form>
+                  )}
+
+                  {isUploading && (
+                    <div className="flex justify-center m-4">
+                      <Spinner />
+                    </div>
                   )}
 
                   {(!session || !session.user) && (
