@@ -63,8 +63,9 @@ export default function SingleVideo({ video, videos }) {
 export const getServerSideProps = async (context) => {
   let video = await getVideo(context.params.id, prisma);
   video = JSON.parse(JSON.stringify(video));
-  let videos = await getVideos({ take: 3 }, prisma);
+  let videos = await getVideos({ take: 3, exclude: context.params.id }, prisma);
   videos = JSON.parse(JSON.stringify(videos));
+
   return {
     props: { video, videos },
   };
