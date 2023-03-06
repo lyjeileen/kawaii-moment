@@ -2,6 +2,8 @@ import { Dialog, Transition } from '@headlessui/react';
 import { Fragment, useState } from 'react';
 import { useSession } from 'next-auth/react';
 
+import Spinner from 'components/Spinner';
+
 const getVideoDuration = (file) => {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -24,6 +26,7 @@ export default function Upload() {
   const [image, setImage] = useState(null);
   const [video, setVideo] = useState(null);
   const [duration, setDuration] = useState(null);
+  const [uploading, setUploading] = useState(false);
 
   if (status === 'loading') {
     return null;
@@ -110,9 +113,16 @@ export default function Upload() {
                         body.append('duration', duration);
 
                         await fetch('/api/upload', { body, method: 'POST' });
+
+                        setTitle('');
+                        setImage(null);
+                        setVideo(null);
+                        setDuration(null);
+                        setIsOpen(false);
                       }}
                     >
                       <div>Title</div>
+
                       <input
                         type="text"
                         name="name"
