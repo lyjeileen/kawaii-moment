@@ -46,9 +46,11 @@ export default function Subscriptions({ initialVideos }) {
 
 export const getServerSideProps = async (context) => {
   const session = await getServerSession(context.req, context.res, authOptions);
+  if (session) {
+    let videos = await getVideos({ subscriptions: session.user.id }, prisma);
+    videos = JSON.parse(JSON.stringify(videos));
 
-  let videos = await getVideos({ subscriptions: session.user.id }, prisma);
-  videos = JSON.parse(JSON.stringify(videos));
-
-  return { props: { initialVideos: videos } };
+    return { props: { initialVideos: videos } };
+  }
+  return { props: { initialVideos: [] } };
 };
