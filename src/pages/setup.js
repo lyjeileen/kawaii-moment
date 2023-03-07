@@ -12,7 +12,7 @@ export default function Setup() {
   const { data: session, status } = useSession();
   const loading = status === 'loading';
 
-  const [name, setName] = useState('');
+  const [name, setName] = useState(session.user.name || '');
   const [imageURL, setImageURL] = useState(null);
   const [image, setImage] = useState(null);
   const [isSaved, setIsSaved] = useState(false);
@@ -76,7 +76,7 @@ export default function Setup() {
             name="name"
             required
             // show original name if have one
-            value={name || session.user.name}
+            value={name}
             className="border p-1 w-full border-amber-800 rounded-md"
             onChange={(e) => setName(e.target.value)}
           />
