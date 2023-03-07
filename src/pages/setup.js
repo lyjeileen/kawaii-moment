@@ -1,11 +1,14 @@
 import { useState } from 'react';
 import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/router';
 import Image from 'next/image';
 
+import Spinner from 'components/Spinner';
 import Button from 'components/Button';
 import LoginMessage from 'components/LoginMessage';
 
 export default function Setup() {
+  const router = useRouter();
   const { data: session, status } = useSession();
   const loading = status === 'loading';
 
@@ -13,6 +16,7 @@ export default function Setup() {
   const [imageURL, setImageURL] = useState(null);
   const [image, setImage] = useState(null);
   const [isSaved, setIsSaved] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
 
   if (loading) return null;
   if (!session || !session.user) return <LoginMessage />;
@@ -34,12 +38,14 @@ export default function Setup() {
         </h1>
 
         <form
-          className="m-4 p-10 pb-4 border-2 border-amber-800 rounded-md"
+          className="m-4 p-10 pb-4 relative border-2 border-amber-800 rounded-md"
           onSubmit={async (e) => {
             e.preventDefault();
 
             //clear previous banner
             setIsSaved(false);
+
+            setIsUploading(true);
 
             const body = new FormData();
             body.append('image', image);
@@ -54,8 +60,16 @@ export default function Setup() {
 
             session.user.name = name;
             session.user.image = image;
+
+            setIsUploading(false);
+            router.reload();
           }}
         >
+          {isUploading && (
+            <div className="absolute w-full h-full left-[44%] top-[36%]">
+              <Spinner />
+            </div>
+          )}
           <div className="my-2">Name</div>
           <input
             type="text"
