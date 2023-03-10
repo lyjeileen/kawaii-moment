@@ -55,6 +55,8 @@ Users could upload videos. Videos and thumbnail images are stored in the AWS S3 
 
 I used responsive mobile-first design for this app and it works on any screens including phone, ipad, and destop.
 
+!["Different screen sizes"](https://github.com/lyjeileen/kawaii-moment/blob/main/public/Demo/Different%20screen%20sizes.gif?raw=true)
+
 <hr>
 
 ## Challenges
