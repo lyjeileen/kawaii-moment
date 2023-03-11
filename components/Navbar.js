@@ -50,7 +50,7 @@ export default function Navbar() {
             </svg>
           </Menu.Button>
           <Menu.Items className="absolute z-10 right-4 top-10 mt-6 w-60 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-amber-50 dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
-            <Menu.Item className="w-full">
+            <Menu.Item>
               <Upload />
             </Menu.Item>
             <Menu.Item>
