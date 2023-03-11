@@ -9,6 +9,10 @@ const calculateTime = (length) => {
   let sec = '00';
   let result = [];
 
+  if (length < 60) {
+    result.push(sec, length);
+  }
+
   if (length >= 3600) {
     hr = Math.floor(length / 3600);
     result.push(hr);
