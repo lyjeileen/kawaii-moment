@@ -13,7 +13,7 @@ import { amount } from 'lib/config';
 
 import Avatar from 'components/Avatar';
 import Videos from 'components/Videos';
-import LoadMore from 'components/LoadMore';
+import LoadMore from 'components/Loadmore';
 import Button from 'components/Button';
 
 export default function Channel({

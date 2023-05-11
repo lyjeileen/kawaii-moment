@@ -53,14 +53,16 @@ export default function Navbar() {
             <Menu.Item>
               <Upload />
             </Menu.Item>
-            <Menu.Item>
-              <Link
-                href={`/channel/${session.user.name}`}
-                className="block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-amber-800 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-              >
-                Your Channel
-              </Link>
-            </Menu.Item>
+            {session && (
+              <Menu.Item>
+                <Link
+                  href={`/channel/${session.user.name}`}
+                  className="block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-amber-800 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                >
+                  Your Channel
+                </Link>
+              </Menu.Item>
+            )}
             <Menu.Item>
               <Link
                 href="/subscriptions"

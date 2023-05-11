@@ -19,7 +19,7 @@ export default function Avatar({ image }) {
     //show a placeholder icon for the user profile when there is no custom image available
     <div className="relative w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600 ">
       <svg
-        className="absolute w-10 h-10 text-gray-400 -left-1"
+        className="absolute w-10 h-10 text-gray-400"
         fill="currentColor"
         viewBox="0 0 20 20"
         xmlns="http://www.w3.org/2000/svg"
